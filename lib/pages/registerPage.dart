@@ -1,18 +1,18 @@
 import 'package:chat_app/constant.dart';
-import 'package:chat_app/pages/registerPage.dart';
+import 'package:chat_app/pages/loginPage.dart';
 import 'package:chat_app/pages/widgets/customButon.dart';
 import 'package:chat_app/pages/widgets/customFormTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-  static String id = 'login page';
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+  static String id = 'register page';
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   bool isLoading = false;
   String? email, password;
   GlobalKey<FormState> formKey = GlobalKey();
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 70),
                 const Text(
-                  "LOGIN",
+                  "REGISTER",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -70,25 +70,23 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 70),
-                CustomButon(
-                  text: "Login",
-                  onTap: () {},
-                ),
+                CustomButon(text: "Register",onTap: (){},),
                 const SizedBox(height: 70),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("If you wont have an account click "),
+                    const Text("If you have an account click "),
                     TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, RegisterPage.id);
+                          Navigator.pushNamed(context, LoginPage.id);
                         },
                         child: const Text(
-                          "Register",
+                          "Login",
                           style: TextStyle(fontSize: 20),
                         )),
                   ],
                 ),
+              
               ],
             ),
           ),
