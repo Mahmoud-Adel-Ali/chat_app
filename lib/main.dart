@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/chatPage.dart';
 import 'package:chat_app/pages/home.dart';
 import 'package:chat_app/pages/loginPage.dart';
 import 'package:chat_app/pages/registerPage.dart';
@@ -18,10 +19,11 @@ class ScholarChat extends StatelessWidget {
         theme: ThemeData.dark(),
         routes: {
           HomePage.id: (context) => const HomePage(),
+          ChatPage.id: (context) => const ChatPage(),
           LoginPage.id: (context) => const LoginPage(),
           RegisterPage.id: (context) => const RegisterPage(),
         },
-        initialRoute: HomePage.id,
+        initialRoute: ChatPage.id,
       ),
     );
   }
