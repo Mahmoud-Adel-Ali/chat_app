@@ -1,7 +1,12 @@
+// ignore_for_file: use_build_context_synchronously, unused_local_variable
+
 import 'package:chat_app/constant.dart';
+import 'package:chat_app/helper/show_snack_bar.dart';
+import 'package:chat_app/pages/chatPage.dart';
 import 'package:chat_app/pages/registerPage.dart';
 import 'package:chat_app/pages/widgets/customButon.dart';
 import 'package:chat_app/pages/widgets/customFormTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -72,7 +77,22 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 70),
                 CustomButon(
                   text: "Login",
-                  onTap: () {},
+                  onTap: () async{
+                    if (formKey.currentState!.validate()) {
+                      try {
+                        isLoading = true;
+                        setState(() {});
+                        await userlogin();
+                        Navigator.pushNamed(context, ChatPage.id);
+                        showSnackBar(context, "login success 🤗❤");
+                      } on FirebaseAuthException catch (e) {
+                        showSnackBar(context, e.toString());
+                      }
+                    } else {
+                      showSnackBar(
+                          context, "you should fill this form befor register");
+                    }
+                  },
                 ),
                 const SizedBox(height: 70),
                 Row(
@@ -95,5 +115,11 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> userlogin() async {
+    UserCredential user = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: email!, password: password!);
   }
 }

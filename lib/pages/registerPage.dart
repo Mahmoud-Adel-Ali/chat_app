@@ -1,7 +1,11 @@
+// ignore_for_file: unused_local_variable, use_build_context_synchronously
+
 import 'package:chat_app/constant.dart';
+import 'package:chat_app/helper/show_snack_bar.dart';
 import 'package:chat_app/pages/loginPage.dart';
 import 'package:chat_app/pages/widgets/customButon.dart';
 import 'package:chat_app/pages/widgets/customFormTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -70,7 +74,25 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 70),
-                CustomButon(text: "Register",onTap: (){},),
+                CustomButon(
+                  text: "Register",
+                  onTap: () async {
+                    if (formKey.currentState!.validate()) {
+                      try {
+                        isLoading = true;
+                        setState(() {});
+                        await userRegister();
+                        Navigator.pushNamed(context, LoginPage.id);
+                        showSnackBar(context, "you can login now 🤗❤");
+                      } on FirebaseAuthException catch (e) {
+                        showSnackBar(context, e.toString());
+                      }
+                    } else {
+                      showSnackBar(
+                          context, "you should fill this form befor register");
+                    }
+                  },
+                ),
                 const SizedBox(height: 70),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -86,12 +108,17 @@ class _RegisterPageState extends State<RegisterPage> {
                         )),
                   ],
                 ),
-              
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> userRegister() async {
+    UserCredential user = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: email!, password: password!);
   }
 }

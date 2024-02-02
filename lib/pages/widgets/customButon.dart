@@ -10,7 +10,7 @@ class CustomButon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 50),
         height: 55,

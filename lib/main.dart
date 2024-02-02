@@ -1,10 +1,16 @@
+import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/pages/chatPage.dart';
 import 'package:chat_app/pages/home.dart';
 import 'package:chat_app/pages/loginPage.dart';
 import 'package:chat_app/pages/registerPage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ScholarChat());
 }
 
@@ -19,11 +25,11 @@ class ScholarChat extends StatelessWidget {
         theme: ThemeData.dark(),
         routes: {
           HomePage.id: (context) => const HomePage(),
-          ChatPage.id: (context) => const ChatPage(),
+          ChatPage.id: (context) =>  ChatPage(),
           LoginPage.id: (context) => const LoginPage(),
           RegisterPage.id: (context) => const RegisterPage(),
         },
-        initialRoute: ChatPage.id,
+        initialRoute: HomePage.id,
       ),
     );
   }
