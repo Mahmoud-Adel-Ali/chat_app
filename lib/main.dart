@@ -1,6 +1,7 @@
 import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/pages/chatPage.dart';
 import 'package:chat_app/pages/cubit/login_cubit.dart';
+import 'package:chat_app/pages/cubit/register_cubit.dart';
 import 'package:chat_app/pages/home.dart';
 import 'package:chat_app/pages/loginPage.dart';
 import 'package:chat_app/pages/registerPage.dart';
@@ -22,8 +23,11 @@ class ScholarChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (context) => LoginCubit(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => LoginCubit(),),
+          BlocProvider(create: (context) => RegisterCubit(),),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark(),
@@ -31,7 +35,7 @@ class ScholarChat extends StatelessWidget {
             HomePage.id: (context) => const HomePage(),
             ChatPage.id: (context) =>  ChatPage(),
             LoginPage.id: (context) =>  LoginPage(),
-            RegisterPage.id: (context) => const RegisterPage(),
+            RegisterPage.id: (context) =>  RegisterPage(),
           },
           initialRoute: HomePage.id,
         ),
