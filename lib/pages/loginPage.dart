@@ -3,6 +3,7 @@
 import 'package:chat_app/constant.dart';
 import 'package:chat_app/helper/show_snack_bar.dart';
 import 'package:chat_app/pages/chatPage.dart';
+import 'package:chat_app/pages/cubit/chat_cubit.dart';
 import 'package:chat_app/pages/cubit/login_cubit.dart';
 import 'package:chat_app/pages/cubit/login_state.dart';
 import 'package:chat_app/pages/registerPage.dart';
@@ -20,12 +21,13 @@ class LoginPage extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit,LoginState>(
+    return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
         } else if (state is LoginSuccess) {
-          Navigator.pushNamed(context, ChatPage.id , arguments: email);
+          BlocProvider.of<ChatCubit>(context).getMessages();
+          Navigator.pushNamed(context, ChatPage.id, arguments: email);
           isLoading = false;
         } else if (state is LoginFailure) {
           showSnackBar(context, state.errorMessage);
@@ -33,6 +35,7 @@ class LoginPage extends StatelessWidget {
         }
       },
       child: ModalProgressHUD(
+        
         inAsyncCall: isLoading,
         child: Scaffold(
           backgroundColor: kPrimaryColor,
