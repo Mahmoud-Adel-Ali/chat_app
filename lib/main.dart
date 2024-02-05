@@ -28,7 +28,7 @@ class ScholarChat extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => LoginCubit(),),
           BlocProvider(create: (context) => RegisterCubit(),),
-          BlocProvider(create: (context) => ChatCubit(),),
+          BlocProvider(create: (cntext) => ChatCubit(),),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
