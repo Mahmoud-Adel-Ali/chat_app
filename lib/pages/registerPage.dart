@@ -22,7 +22,7 @@ class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterCubit, RegisterState>(
+    return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isLoading = true;
@@ -35,7 +35,7 @@ class RegisterPage extends StatelessWidget {
           isLoading = false;
         }
       },
-      child: ModalProgressHUD(
+      builder:(context , state) => ModalProgressHUD(
         inAsyncCall: isLoading,
         child: Scaffold(
           backgroundColor: kPrimaryColor,
