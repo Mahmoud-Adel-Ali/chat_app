@@ -18,6 +18,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var email = ModalRoute.of(context)!.settings.arguments;
+    messagesList = BlocProvider.of<ChatCubit>(context).messagesList;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

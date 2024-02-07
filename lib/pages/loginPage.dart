@@ -2,10 +2,11 @@
 
 import 'package:chat_app/constant.dart';
 import 'package:chat_app/helper/show_snack_bar.dart';
+import 'package:chat_app/pages/blocs/auth_bloc/auth_bloc.dart';
+import 'package:chat_app/pages/blocs/auth_bloc/auth_event.dart';
+import 'package:chat_app/pages/blocs/auth_bloc/auth_state.dart';
 import 'package:chat_app/pages/chatPage.dart';
 import 'package:chat_app/pages/cubit/chat_cubit.dart';
-import 'package:chat_app/pages/cubit/login_cubit.dart';
-import 'package:chat_app/pages/cubit/login_state.dart';
 import 'package:chat_app/pages/registerPage.dart';
 import 'package:chat_app/pages/widgets/customButon.dart';
 import 'package:chat_app/pages/widgets/customFormTextField.dart';
@@ -21,7 +22,7 @@ class LoginPage extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -91,8 +92,8 @@ class LoginPage extends StatelessWidget {
                     text: "Login",
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        BlocProvider.of<LoginCubit>(context)
-                            .userlogin(email: email!, password: password!);
+                        BlocProvider.of<AuthBloc>(context).add(
+                            LoginEvent(email: email!, password: password!));
                       } else {
                         showSnackBar(context,
                             "you should fill this form befor register");

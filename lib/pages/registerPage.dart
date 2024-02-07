@@ -2,8 +2,9 @@
 
 import 'package:chat_app/constant.dart';
 import 'package:chat_app/helper/show_snack_bar.dart';
-import 'package:chat_app/pages/cubit/register_cubit.dart';
-import 'package:chat_app/pages/cubit/register_state.dart';
+import 'package:chat_app/pages/blocs/auth_bloc/auth_bloc.dart';
+import 'package:chat_app/pages/blocs/auth_bloc/auth_event.dart';
+import 'package:chat_app/pages/blocs/auth_bloc/auth_state.dart';
 import 'package:chat_app/pages/loginPage.dart';
 import 'package:chat_app/pages/widgets/customButon.dart';
 import 'package:chat_app/pages/widgets/customFormTextField.dart';
@@ -22,7 +23,7 @@ class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isLoading = true;
@@ -35,7 +36,7 @@ class RegisterPage extends StatelessWidget {
           isLoading = false;
         }
       },
-      builder:(context , state) => ModalProgressHUD(
+      builder: (context, state) => ModalProgressHUD(
         inAsyncCall: isLoading,
         child: Scaffold(
           backgroundColor: kPrimaryColor,
@@ -91,8 +92,8 @@ class RegisterPage extends StatelessWidget {
                     text: "Register",
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        BlocProvider.of<RegisterCubit>(context)
-                            .userRegister(email: email!, password: password!);
+                        BlocProvider.of<AuthBloc>(context).add(
+                            RegisterEvent(email: email!, password: password!));
                       } else {
                         showSnackBar(context,
                             "you should fill this form befor register");
